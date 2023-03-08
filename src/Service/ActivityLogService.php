@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecosystem\ActivityLog\Service;
+namespace Ecosystem\ActivityLogBundle\Service;
 
 class ActivityLogService
 {
