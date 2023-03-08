@@ -15,8 +15,8 @@ class ActivityLogService
         string $triggerType,
         string|int $triggerId,
         string $triggerScreen,
-        ?mixed $new,
-        ?mixed $old
+        mixed $new,
+        mixed $old
     ): void {
         $payload = [
             'timestamp' => intval(microtime(true) * 1000),
