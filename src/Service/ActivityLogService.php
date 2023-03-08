@@ -2,10 +2,20 @@
 
 namespace Ecosystem\ActivityLogBundle\Service;
 
+use Aws\Sqs\SnsClient;
+use Aws\Exception\AwsException;
+
 class ActivityLogService
 {
+    private SnsClient $client;
+
     public function __construct(private string $activityLog)
     {
+        $this->client = new SnsClient([
+            'region' => getenv('AWS_REGION'),
+            'version' => '2012-11-05',
+            'credentials' => false
+        ]);
     }
 
     public function log(
@@ -33,5 +43,10 @@ class ActivityLogService
         if ($new !== null) {
             $payload['record'] = ['new' => $new, 'old' => $old];
         }
+
+        $this->client->publish([
+            'Message' => json_encode($payload),
+            'TopicArn' => $this->activityLog,
+        ]);
     }
 }
