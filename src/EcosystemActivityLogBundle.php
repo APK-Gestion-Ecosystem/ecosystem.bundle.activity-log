@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecosystem\ActivityLog;
+namespace Ecosystem\ActivityLogBundle;
 
 use Ecosystem\BusBundle\Service\ActivityLogService;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
