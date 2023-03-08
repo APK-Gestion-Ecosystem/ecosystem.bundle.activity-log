@@ -2,7 +2,7 @@
 
 namespace Ecosystem\ActivityLogBundle;
 
-use Ecosystem\BusBundle\Service\ActivityLogService;
+use Ecosystem\ActivityLogBundle\Service\ActivityLogService;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

@@ -5,5 +5,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    Ecosystem\ActivityLog\Service\:
+    Ecosystem\ActivityLogBundle\Service\:
         resource: '../src/Service'
