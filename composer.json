@@ -1,0 +1,12 @@
+{
+    "name": "ecosystem/activity-log",
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": {
+            "Ecosystem\\ActivityLogBundle\\": "src/"
+        }
+    },
+    "require": {
+        "aws/aws-sdk-php": "^3"
+    }
+}

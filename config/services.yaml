@@ -1,0 +1,9 @@
+parameters:
+    # nothing to declare
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Ecosystem\ActivityLog\Service\:
+        resource: '../src/Service'
