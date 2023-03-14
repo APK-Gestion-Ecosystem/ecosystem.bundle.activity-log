@@ -57,6 +57,12 @@ class ActivityLogService
                 'Message' => json_encode($payload),
                 'TopicArn' => $this->activityLogArn,
             ]);
+            $this->logger->debug(sprintf(
+                'Logged activity for "%s:%s:%s".',
+                $namespace,
+                $event,
+                $id
+            ));
         } catch (\Exception $exception) {
             $this->logger->critical(sprintf(
                 'Unable to send activity log. Exception: "%s".',
