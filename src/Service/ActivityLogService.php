@@ -2,7 +2,7 @@
 
 namespace Ecosystem\ActivityLogBundle\Service;
 
-use Aws\Sqs\SnsClient;
+use Aws\Sns\SnsClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
