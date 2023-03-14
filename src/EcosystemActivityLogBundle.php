@@ -17,7 +17,7 @@ class EcosystemActivityLogBundle extends AbstractBundle
     ): void {
         $containerConfigurator->import('../config/services.yaml');
 
-        $containerConfigurator->services()->get(ActivityLogService::class)->arg(0, $config['topic']);
+        $containerConfigurator->services()->get(ActivityLogService::class)->arg(0, $config['arn']);
     }
 
     public function configure(DefinitionConfigurator $definition): void

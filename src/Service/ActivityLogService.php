@@ -3,19 +3,27 @@
 namespace Ecosystem\ActivityLogBundle\Service;
 
 use Aws\Sqs\SnsClient;
-use Aws\Exception\AwsException;
+use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ActivityLogService
 {
+    #[Required]
+    public LoggerInterface $logger;
+
     private SnsClient $client;
 
-    public function __construct(private string $activityLog)
+    public function __construct(private string $activityLogArn)
     {
-        $this->client = new SnsClient([
+        $config = [
             'region' => getenv('AWS_REGION'),
-            'version' => '2012-11-05',
-            'credentials' => false
-        ]);
+            'version' => '2010-03-31',
+        ];
+
+        if (getenv('LOCALSTACK')) {
+            $config['credentials'] = false;
+            $config['endpoint'] = 'http://localstack:4566';
+        }
     }
 
     public function log(
@@ -44,9 +52,16 @@ class ActivityLogService
             $payload['record'] = ['new' => $new, 'old' => $old];
         }
 
-        $this->client->publish([
-            'Message' => json_encode($payload),
-            'TopicArn' => $this->activityLog,
-        ]);
+        try {
+            $this->client->publish([
+                'Message' => json_encode($payload),
+                'TopicArn' => $this->activityLogArn,
+            ]);
+        } catch (\Exception $exception) {
+            $this->logger->critical(sprintf(
+                'Unable to send activity log. Exception: "%s".',
+                $exception->getMessage()
+            ));
+        }
     }
 }
