@@ -24,6 +24,8 @@ class ActivityLogService
             $config['credentials'] = false;
             $config['endpoint'] = 'http://localstack:4566';
         }
+
+        $this->client = new SnsClient($config);
     }
 
     public function log(
