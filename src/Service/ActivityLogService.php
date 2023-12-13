@@ -17,12 +17,12 @@ class ActivityLogService
     {
         $config = [
             'region' => getenv('AWS_REGION'),
-            'version' => '2010-03-31',
+            'version' => 'latest',
         ];
 
         if (getenv('LOCALSTACK')) {
-            $config['credentials'] = false;
             $config['endpoint'] = 'http://localstack:4566';
+            $config['credentials'] = false;
         }
 
         $this->client = new SnsClient($config);
