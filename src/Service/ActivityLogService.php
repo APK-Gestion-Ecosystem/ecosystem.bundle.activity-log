@@ -13,8 +13,11 @@ class ActivityLogService
 
     private SnsClient $client;
 
-    public function __construct(private string $activityLogArn)
-    {
+    public function __construct(
+        private string $activityLogArn,
+        private readonly string $id = 'system',
+        private readonly string $screenName = 'system',
+    ) {
         $config = [
             'region' => getenv('AWS_REGION'),
             'version' => 'latest',
@@ -36,7 +39,8 @@ class ActivityLogService
         string|int $triggerId,
         string $triggerScreen,
         mixed $new,
-        mixed $old
+        mixed $old,
+        ?string $message = null
     ): void {
         $payload = [
             'timestamp' => intval(microtime(true) * 1000),
@@ -52,6 +56,10 @@ class ActivityLogService
 
         if ($new !== null) {
             $payload['record'] = ['new' => $new, 'old' => $old];
+        }
+
+        if ($message !== null) {
+            $payload['message'] = $message;
         }
 
         try {
@@ -71,5 +79,14 @@ class ActivityLogService
                 $exception->getMessage()
             ));
         }
+    }
+
+    public function logMessage(
+        string $namespace,
+        string $event,
+        string $id,
+        string $message
+    ): void {
+        $this->log($namespace, $event, $id, 'system', $this->id, $this->screenName, null, null, $message);
     }
 }

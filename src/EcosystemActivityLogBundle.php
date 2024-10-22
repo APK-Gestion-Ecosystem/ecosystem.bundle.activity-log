@@ -18,6 +18,8 @@ class EcosystemActivityLogBundle extends AbstractBundle
         $containerConfigurator->import('../config/services.yaml');
 
         $containerConfigurator->services()->get(ActivityLogService::class)->arg(0, $config['arn']);
+        $containerConfigurator->services()->get(ActivityLogService::class)->arg(1, $config['id']);
+        $containerConfigurator->services()->get(ActivityLogService::class)->arg(2, $config['screen_name']);
     }
 
     public function configure(DefinitionConfigurator $definition): void
